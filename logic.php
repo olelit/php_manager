@@ -11,10 +11,10 @@ function getFiles($allFiles = [], $path = DIRECORY){
     foreach ($files as $file){
         $fullPath = joinPath($path, $file);
         if(is_dir($fullPath) && array_diff(scandir($fullPath), array('..', '.')) != []){
-            $allFiles[$file][] = [$file => getFiles($allFiles, $fullPath)];
+            $allFiles[$file] = getFiles($allFiles, $fullPath);
         }
         else{
-            $allFiles[$path][] = $file;
+            $allFiles[$file] = $file;
         }
     }
     return $allFiles;
