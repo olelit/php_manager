@@ -70,5 +70,6 @@ function upload($data, $file){
 
 function create($path){
     $folderPath = DIRECTORY.$path."/";
+    var_dump($folderPath);
     return mkdir($folderPath);
 }

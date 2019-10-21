@@ -47,7 +47,8 @@ document.querySelector('.paste').addEventListener('click', (event) => {
     request({ op: op, old_path: pathToFileOrFolder, new_path: bufferPath }).then((responce) => {
 
         if(op == "move"){
-            pasteSelector.target.parentNode.removeChild(lastEvent.target);
+
+            pasteSelector.target.parentNode.removeChild(pasteSelector.target);
         };
 
         op = "";
@@ -97,23 +98,23 @@ document.querySelector('.upload_file').addEventListener('change', (event) => {
 });
 
 function insertElement(filename, event = lastEvent){
-    console.log(filename);
-    if(event.target.nextSibling != null && event.target.nextSibling.classList.contains("submenu")){
+    if(event.target.nextSibling != null && event.target.nextSibling.classList !== undefined && event.target.nextSibling.classList.contains("submenu")){
         if(filename.indexOf(".") === -1){
-            event.target.nextSibling.innerHTML+= "<li class = 'folder'>" + filename + "</li>";
+            event.target.nextSibling.querySelector('ul').innerHTML+= "<ul><li class='first folder'>" + filename + "</li><div class = 'submenu hide'><ul></ul></div></ul>";
         }
         else{
-            event.target.nextSibling.innerHTML+= "<li class = 'file'>" + filename + "</li>";
+            event.target.nextSibling.querySelector('ul').innerHTML+= "<li class = 'file'>" + filename + "</li>";
         }
     }
     else{
         if(filename.indexOf(".") === -1){
-            manager.innerHTML+= "<li class = 'folder'>" + filename + "</li>";
+            manager.innerHTML+= "<ul><li class='folder'>" + filename + "</li><div class = 'submenu hide'><ul></ul></div></ul>";
         }
         else{
             manager.innerHTML+= "<li class = 'file'>" + filename + "</li>";
         }
     }
+    reinit();
 }
 
 function reinit() {
@@ -186,7 +187,7 @@ function contextMenu(event){
 }
 
 function createFullPath(event) {
-    path = "";
+    path = "/";
     let elem = event.target;
     let parents = event.path;
     let index = parents.length - 3;
