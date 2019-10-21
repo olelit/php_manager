@@ -14,6 +14,10 @@ a{
     cursor:pointer;
 }
 
+.manager .submenu {
+    margin-left: 20px;
+}
+
 li{
     list-style: none;
 }
@@ -22,6 +26,18 @@ body{
     display:flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.submenu{
+    
+}
+
+.manager li{
+    padding: 2px 5px;
+}
+
+.manager li:hover{
+    background-color: aquamarine;
 }
 
 .context_menu{
@@ -34,20 +50,16 @@ body{
     min-height: 170px;
 }
 
+.context_menu span{
+    cursor: pointer;
+}
+
 .context_menu ul{
     width: 150px;
 }
 
 .context_menu li{
     padding: 6px 10px;
-}
-
-.manager_item{
-
-}
-
-.manager_size{
-
 }
 
 .context_menu li:hover{
@@ -75,4 +87,76 @@ body{
     -webkit-box-shadow: 0px 0px 16px 3px rgba(173,173,173,1);
     -moz-box-shadow: 0px 0px 16px 3px rgba(173,173,173,1);
     box-shadow: 0px 0px 16px 3px rgba(173,173,173,1);
+}
+
+.file::before, .img::before, .folder::before{
+    content: "";
+    width: 20px;
+    height: 20px;
+}
+
+.img::before{
+    background-color: red;
+}
+
+.folder::before{
+    background-color: green;
+}
+
+.file::before{
+    background-color: black;
+}
+
+.modal{
+    top: 50px;
+    width: 600px;
+    height: 510px;
+    position: absolute;
+    background-color: white;
+    z-index: 5;
+    -webkit-box-shadow: 0px 0px 23px 5px rgba(204,198,204,1);
+    -moz-box-shadow: 0px 0px 23px 5px rgba(204,198,204,1);
+    box-shadow: 0px 0px 23px 5px rgba(204,198,204,1);
+}
+
+.close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.modal .title{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+.modal .content{
+    margin: 10%;
+    height: 65%;
+}
+
+.modal .content .textarea{
+    height: 100%;
+}
+
+.modal textarea{
+    width: 100%;
+    height: 100%;
+}
+
+.modal .action{
+    text-align: center;
+    margin-top: 4%;
+}
+
+.modal .save{
+    background-color: #30ddff;
+    border: none;
+    padding: 10px 90px;
+}
+
+.modal textarea{
+    resize: none;
+    border: 1px solid black;
 }

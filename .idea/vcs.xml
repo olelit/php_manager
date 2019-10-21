@@ -5,5 +5,6 @@
     <mapping directory="$PROJECT_DIR$/files/domains/ksis" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/files/python" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/files/python/files/python" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/php_manager" vcs="Git" />
   </component>
 </project>

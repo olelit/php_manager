@@ -13,8 +13,7 @@
 <body>
     <div class="container">
         <div class="row row-name">
-            <div class="manager_item" data-name="Item 1">Название:</div>
-            <div class="manager_size">Размер:</div>
+            <div class="manager_item">Название:</div>
         </div>
         <div class="manager">
 
@@ -23,13 +22,52 @@
 
     <div class="hide context_menu shadow">
         <ul class="ul_menu">
-            <li><a href="/">Открыть</a></li>
-            <li><a href="/">Загрузить</a></li>
-            <li><a href="/">Копировать</a></li>
-            <li><a href="/">Вырезать</a></li>
-            <li><a href="/">Вставить</a></li>
-            <li><a href="/">Удалить</a></li>
+            <li><span class="upload">Загрузить</span></li>
+            <li><span class="new_folder">Новая папка</span></li>
+            <li><span class="copy">Копировать</span></li>
+            <li><span class="move">Вырезать</span></li>
+            <li><span class="paste">Вставить</span></li>
+            <li><span class="delete">Удалить</span></li>
+            <li class="hide"><input type="file" class="upload_file" accept=".txt"></li>
         </ul>
+    </div>
+
+    <div class="modal hide">
+        <div class="close">
+            X
+        </div>
+        <div class="title">
+            <span>Пример</span>
+        </div>
+        <div class="content">
+            <div class="textarea">
+                <textarea name="" id="" cols="30" rows="10"></textarea>
+            </div>
+            <div class="action">
+                <button class="save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal folder_modal hide">
+        <div class="close">
+            X
+        </div>
+        <div class="title">
+            <span>Имя папки</span>
+        </div>
+        <div class="content">
+            <div class="textarea">
+                <input type="text" class="folder_name">
+            </div>
+            <div class="action">
+                <button class="save create">
+                    Создать
+                </button>
+            </div>
+        </div>
     </div>
 
     <script src="axios.js"></script>
