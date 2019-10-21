@@ -11,7 +11,8 @@ let manager = document.querySelector(".manager"),
     bufferPath = "",
     pathToFileOrFolder = "",
     operationFilename = "",
-    newDirectory = "";
+    newDirectory = "",
+    lastEvent = undefined;
 
 document.querySelector(".save").addEventListener('click', (event) => {
     let textContent = text.value;
@@ -72,7 +73,8 @@ document.querySelector('.delete').addEventListener('click', (event) => {
 document.querySelector('.upload_file').addEventListener('change', (event) => {
     let files = event.target.files || event.dataTransfer.files;
     let formData = new FormData();
-    formData.append("file", document.querySelector('.upload_file').files[0]);
+    let file = document.querySelector('.upload_file').files[0];
+    formData.append("file", file);
     formData.append("op", 'upload');
     formData.append("path", bufferPath);
 
@@ -81,13 +83,13 @@ document.querySelector('.upload_file').addEventListener('change', (event) => {
             'Content-Type': 'multipart/form-data'
         }
     }).then((responce) => {
-        reinit();
+        lastEvent.currentTarget.innerHTML += "<li class = 'file'>" + file.name + "</li>";
+        bufferPath = "";
+        //
     })
 });
 
 function reinit() {
-    //manager = manager.querySelector(".manager");
-
     links = manager.querySelectorAll('li');
     window.addEventListener('click', (event) => {
         if (!menu.classList.contains(hideClass)) {
@@ -140,6 +142,8 @@ function reinit() {
                 pathToFileOrFolder = createFullPath(event);
             }
 
+            lastEvent = event;
+
             event.preventDefault();
         })
     })
@@ -182,9 +186,10 @@ function getOutput(data) {
     return output;
 }
 
+let files = [];
 function fileList() {
     request().then((response) => {
-        let files = response.data;
+        files = response.data;
         let output = getOutput(response.data);
         manager.innerHTML = output;
         reinit();
