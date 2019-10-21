@@ -7,23 +7,26 @@ let manager = document.querySelector(".manager"),
     menu = document.querySelector(".context_menu"),
     modal = document.querySelector('.modal'),
     closeModal = document.querySelector('.close'),
+    closeFolderModal = document.querySelector('.folder_modal .close'),
     text = document.querySelector('.modal textarea'),
     bufferPath = "",
     pathToFileOrFolder = "",
     operationFilename = "",
     newDirectory = "",
-    lastEvent = undefined;
+    lastEvent = undefined,
+    folderModal = document.querySelector(".folder_modal"),
+    pasteSelector = undefined;
 
 document.querySelector(".save").addEventListener('click', (event) => {
     let textContent = text.value;
     request({ op: "save", text: textContent, path: bufferPath }, 'put').then((response) => {
         text.value = "";
         closeModal.click();
+
     });
 });
 
 document.querySelector('.new_folder').addEventListener('click', (event) => {
-    let folderModal = document.querySelector(".folder_modal");
     if (folderModal.classList.contains('hide')) {
         folderModal.classList.remove('hide')
     }
@@ -42,7 +45,13 @@ document.querySelector('.move').addEventListener('click', (event) => {
 
 document.querySelector('.paste').addEventListener('click', (event) => {
     request({ op: op, old_path: pathToFileOrFolder, new_path: bufferPath }).then((responce) => {
-        reinit();
+
+        if(op == "move"){
+            pasteSelector.target.parentNode.removeChild(lastEvent.target);
+        };
+
+        op = "";
+        insertElement(pathToFileOrFolder.split('/').pop());
     });
 });
 
@@ -53,7 +62,7 @@ document.querySelector('.create').addEventListener('click', (event) => {
         if (!folderModal.classList.contains('hide')) {
             path = bufferPath + "/" + folderName;
             request({ op: "create", path: path }).then((responce) => {
-                reinit();
+                insertElement(folderName);
             });
             folderModal.classList.add('hide');
         }
@@ -66,7 +75,7 @@ document.querySelector('.upload').addEventListener('click', (event) => {
 
 document.querySelector('.delete').addEventListener('click', (event) => {
     request({ op: "delete", path: pathToFileOrFolder }, 'delete').then((response) => {
-        reinit();
+        lastEvent.target.parentNode.removeChild(lastEvent.target);
     });
 });
 
@@ -83,11 +92,29 @@ document.querySelector('.upload_file').addEventListener('change', (event) => {
             'Content-Type': 'multipart/form-data'
         }
     }).then((responce) => {
-        lastEvent.currentTarget.innerHTML += "<li class = 'file'>" + file.name + "</li>";
-        bufferPath = "";
-        //
+        insertElement(file.name);
     })
 });
+
+function insertElement(filename, event = lastEvent){
+    console.log(filename);
+    if(event.target.nextSibling != null && event.target.nextSibling.classList.contains("submenu")){
+        if(filename.indexOf(".") === -1){
+            event.target.nextSibling.innerHTML+= "<li class = 'folder'>" + filename + "</li>";
+        }
+        else{
+            event.target.nextSibling.innerHTML+= "<li class = 'file'>" + filename + "</li>";
+        }
+    }
+    else{
+        if(filename.indexOf(".") === -1){
+            manager.innerHTML+= "<li class = 'folder'>" + filename + "</li>";
+        }
+        else{
+            manager.innerHTML+= "<li class = 'file'>" + filename + "</li>";
+        }
+    }
+}
 
 function reinit() {
     links = manager.querySelectorAll('li');
@@ -123,30 +150,39 @@ function reinit() {
             }
         });
         item.addEventListener('contextmenu', (event) => {
-
-            operationFilename = event.currentTarget.innerText;
-
-            let mouse = window.event;
-            let x = mouse.x;
-            let y = mouse.y;
-
-            menu.classList.remove(hideClass);
-            menu.style.left = (x - menuMargin) + "px";
-            menu.style.top = (y - menuMargin) + "px";
-
-            if (event.target.classList.contains('folder')) {
-                bufferPath = createFullPath(event);
-            }
-
-            if (op === "") {
-                pathToFileOrFolder = createFullPath(event);
-            }
-
-            lastEvent = event;
-
-            event.preventDefault();
+            contextMenu(event);
         })
     })
+}
+
+manager.addEventListener('contextmenu', (event) => {
+    contextMenu(event);
+})
+
+function contextMenu(event){
+    
+    operationFilename = event.currentTarget.innerText;
+
+    let mouse = window.event;
+    let x = mouse.x;
+    let y = mouse.y;
+
+    menu.classList.remove(hideClass);
+    menu.style.left = (x - menuMargin) + "px";
+    menu.style.top = (y - menuMargin) + "px";
+
+    if (event.target.classList.contains('folder')) {
+        bufferPath = createFullPath(event);
+    }
+
+    if (op === "") {
+        pathToFileOrFolder = createFullPath(event);
+        pasteSelector = event;
+    }
+
+    lastEvent = event;
+
+    event.preventDefault();
 }
 
 function createFullPath(event) {
@@ -225,6 +261,10 @@ function request(data = {}, method = "get", headers = {}, url = "url.php", ) {
 
 closeModal.addEventListener('click', (event) => {
     modal.classList.add('hide');
+});
+
+closeFolderModal.addEventListener('click', (event) => {
+    folderModal.classList.add('hide');
 });
 
 fileList();

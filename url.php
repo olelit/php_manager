@@ -6,7 +6,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 if(isset($data['op'])){
     switch($data['op']){
         case 'open':{
-            openFile($data['path']);
+            echo openFile($data['path']);
             exit;
             break;
         }
@@ -16,6 +16,7 @@ if(isset($data['op'])){
             break;
         }
     }
+    exit;
 }
 
 if(isset($_GET['op'])){
@@ -37,10 +38,12 @@ if(isset($_GET['op'])){
             break;
         }
     }
+    exit;
 }
 
 if(isset($_POST['op'])){
     upload($_POST, $_FILES['file']);
+    exit;
 }
 
    
