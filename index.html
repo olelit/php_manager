@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row row-name">
+            <div class="manager_item">Название:</div>
+        </div>
+        <div class="manager">
+
+        </div>
+    </div>
+
+    <div class="hide context_menu shadow">
+        <ul class="ul_menu">
+            <li><span class="upload">Загрузить</span></li>
+            <li><span class="new_folder">Новая папка</span></li>
+            <li><span class="copy">Копировать</span></li>
+            <li><span class="move">Вырезать</span></li>
+            <li><span class="paste">Вставить</span></li>
+            <li><span class="delete">Удалить</span></li>
+            <li class="hide"><input type="file" class="upload_file" accept=".txt"></li>
+        </ul>
+    </div>
+
+    <div class="modal hide">
+        <div class="close">
+            X
+        </div>
+        <div class="title">
+            <span>Пример</span>
+        </div>
+        <div class="content">
+            <div class="textarea">
+                <textarea name="" id="" cols="30" rows="10"></textarea>
+            </div>
+            <div class="action">
+                <button class="save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal folder_modal hide">
+        <div class="close">
+            X
+        </div>
+        <div class="title">
+            <span>Имя папки</span>
+        </div>
+        <div class="content">
+            <div class="textarea">
+                <input type="text" class="folder_name">
+            </div>
+            <div class="action">
+                <button class="save create">
+                    Создать
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="axios.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
