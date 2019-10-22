@@ -134,7 +134,6 @@ function reinit() {
         }
 
         if (element !== null && element.classList.contains(submenuClass)) {
-            console.log(event.target);
             request({path:bufferPath}).then((response) => {
                 for(let item in response.data){
                     insertElement(response.data[item]);
@@ -166,25 +165,18 @@ function reinit() {
     }
 
     links.forEach(item => {
-
-        // item.removeEventListener('contextmenu', contextMenu);
-        // item.removeEventListener('dblclick', dblclick);
         item.ondblclick =  (event) => {
             dblclick(event);
         };
         item.oncontextmenu = (event) => {
             contextMenu(event);
         };
-        // item.addEventListener('contextmenu', (event) => {
-        //     contextMenu(event);
-        // });
-
     })
 }
 
-manager.addEventListener('contextmenu', (event) => {
+manager.oncontextmenu = (event) => {
     contextMenu(event);
-});
+};
 
 function contextMenu(event){
     
