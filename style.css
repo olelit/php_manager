@@ -35,6 +35,9 @@ body{
 
 .manager li{
     padding: 10px 60px;
+}
+
+.manager ul{
     border-bottom: 1px solid lightgray;
 }
 
@@ -50,6 +53,13 @@ body{
     top: 0;
     left: 0;
     min-height: 170px;
+}
+
+.file_info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 10px;
 }
 
 .context_menu span{

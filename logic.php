@@ -8,7 +8,20 @@ function joinPath($path , $name){
 
 function getFiles($path){
     $allFiles = array_diff(scandir($path), array('..', '.'));
-    return $allFiles;
+    $fileList = [];
+    foreach ($allFiles as $item){
+        if(!is_dir($path."/".$item)){
+            $fileList[$item] = [
+                'name' => $item,
+                'size' => number_format(filesize($path."/".$item) / 1024, 2). " kb",
+            ];
+        }
+        else{
+            $fileList[] = $item;
+        }
+    }
+
+    return $fileList;
 }
 
 

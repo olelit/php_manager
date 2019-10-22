@@ -227,15 +227,18 @@ function createFullPath(event) {
 function getOutput(data) {
     let output = "";
     for (let key in data) {
-        if (Array.isArray(data[key]) || typeof data[key] === 'object') {
+        console.log(data[key]['name']);
+        if(data[key]['name'] !== undefined){
+            output += "<ul class='file_info'>";
+            output += "<li class = 'file'>" + data[key]['name'] + "</li>";
+            output += "<li>" + data[key]['size'] + "</li>";
+            output += "</ul>";
+        }
+        else if (Array.isArray(data[key]) || typeof data[key] === 'object') {
             output += "<ul>" + "<li class='first folder'>" + key + "</li><div class = 'submenu hide'><ul>" + getOutput(data[key]) + "</ul></div>" + "</ul>";
         }
-        else if (data[key].indexOf(".") == -1) {
+        else if (data[key]['name'] === undefined) {
             output += "<ul>" + "<li class='first folder'>" + data[key] + "</li><div class = 'submenu hide'><ul></ul></div>" + "</ul>";
-        }
-        else {
-            let elemClass = 'file';
-            output += "<li class = " + elemClass + ">" + data[key] + "</li>";
         }
     }
     return output;
