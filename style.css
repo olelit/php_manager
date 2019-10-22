@@ -41,8 +41,8 @@ body{
     border-bottom: 1px solid lightgray;
 }
 
-.manager li:hover{
-    background-color: aquamarine;
+.manager ul:hover{
+    background-color: #5ccdda;
 }
 
 .context_menu{
@@ -53,6 +53,10 @@ body{
     top: 0;
     left: 0;
     min-height: 170px;
+}
+
+.dark-text{
+    margin-left: 5%;: 5%;
 }
 
 .file_info{
@@ -169,4 +173,20 @@ body{
 .modal textarea{
     resize: none;
     border: 1px solid black;
+}
+
+.black{
+    background-color: black;
+}
+
+.black li, .black .manager_item{
+    color:gainsboro;
+}
+
+.black .manager li:hover{
+    background-color: grey;
+}
+
+.black .row{
+    border-bottom: 1px solid white;
 }

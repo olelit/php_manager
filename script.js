@@ -17,6 +17,16 @@ let manager = document.querySelector(".manager"),
     folderModal = document.querySelector(".folder_modal"),
     pasteSelector = undefined;
 
+document.querySelector(".dark").addEventListener('change', (event) => {
+    let body = document.querySelector("body");
+    if(!body.classList.contains('black')){
+        body.classList.add('black');
+    }
+    else{
+        body.classList.remove('black');
+    }
+});
+
 document.querySelector(".save").addEventListener('click', (event) => {
     let textContent = text.value;
     request({ op: "save", text: textContent, path: bufferPath }, 'put').then((response) => {
