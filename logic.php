@@ -6,20 +6,11 @@ function joinPath($path , $name){
     return $path."/".$name;
 }
 
-function getFiles($allFiles = [], $path = DIRECTORY){
-    $files = array_diff(scandir($path), array('..', '.'));
-    foreach ($files as $file){
-        $fullPath = joinPath($path, $file);
-        if(is_dir($fullPath) && array_diff(scandir($fullPath), array('..', '.')) != []){
-            getFiles($allFiles, $fullPath);
-            $allFiles[$file] = array_diff(scandir($fullPath), array('..', '.'));
-        }
-        else{
-            $allFiles[$file] = $file;
-        }
-    }
+function getFiles($path){
+    $allFiles = array_diff(scandir($path), array('..', '.'));
     return $allFiles;
 }
+
 
 function save($path, $text){
     return file_put_contents(joinPath(DIRECTORY, $path), $text);
@@ -55,9 +46,10 @@ function delTree($dir) {
      return rmdir($dir);
    }
 
-function showAll(){
-    $files = getFiles();
+function showAll($path="/"){
+    $files = getFiles(DIRECTORY.$path);
     return $files;
+
 }
 
 function openFile($path){
