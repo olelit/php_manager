@@ -11,7 +11,8 @@ function getFiles($allFiles = [], $path = DIRECTORY){
     foreach ($files as $file){
         $fullPath = joinPath($path, $file);
         if(is_dir($fullPath) && array_diff(scandir($fullPath), array('..', '.')) != []){
-            $allFiles[$file] = getFiles($allFiles, $fullPath);
+            getFiles($allFiles, $fullPath);
+            $allFiles[$file] = array_diff(scandir($fullPath), array('..', '.'));
         }
         else{
             $allFiles[$file] = $file;
@@ -70,6 +71,5 @@ function upload($data, $file){
 
 function create($path){
     $folderPath = joinPath(DIRECTORY, $path);
-    var_dump($folderPath);
     return mkdir($folderPath);
 }

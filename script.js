@@ -175,8 +175,8 @@ function getOutput(data) {
         if (Array.isArray(data[key]) || typeof data[key] === 'object') {
             output += "<ul>" + "<li class='first folder'>" + key + "</li><div class = 'submenu hide'><ul>" + getOutput(data[key]) + "</ul></div>" + "</ul>";
         }
-        else if (key.indexOf(".") == -1) {
-            output += "<ul>" + "<li class='first folder'>" + key + "</li><div class = 'submenu hide'><ul></ul></div>" + "</ul>";
+        else if (data[key].indexOf(".") == -1) {
+            output += "<ul>" + "<li class='first folder'>" + data[key] + "</li><div class = 'submenu hide'><ul></ul></div>" + "</ul>";
         }
         else {
             let elemClass = 'file';
@@ -190,6 +190,7 @@ let files = [];
 function fileList() {
     request().then((response) => {
         files = response.data;
+        console.log('dfdfdf');
         let output = getOutput(response.data);
         manager.innerHTML = output;
         reinit();
