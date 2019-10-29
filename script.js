@@ -113,7 +113,7 @@ function insertElement(filename, event = lastEvent){
             event.target.nextSibling.querySelector('ul').innerHTML+= "<ul><li class='first folder'>" + filename + "</li><div class = 'submenu hide'><ul></ul></div></ul>";
         }
         else{
-            event.target.nextSibling.querySelector('ul').innerHTML+= "<li class = 'file'>" + filename + "</li>";
+            event.target.nextSibling.querySelector('ul').innerHTML+= "<ul class='file_info'><li class = 'file'>" + filename + "</li></ul>";
         }
     }
     else{
@@ -121,7 +121,7 @@ function insertElement(filename, event = lastEvent){
             manager.innerHTML+= "<ul><li class='first folder'>" + filename + "</li><div class = 'submenu hide'><ul></ul></div></ul>";
         }
         else{
-            manager.innerHTML+= "<li class = 'file'>" + filename + "</li>";
+            manager.innerHTML+= "<ul class='file_info'><li class = 'file'>" + filename + "</li></ul>";
         }
     }
     reinit();
