@@ -37,11 +37,13 @@ body{
     padding: 10px 60px;
 }
 
-.manager ul{
+.manager .folder_container,
+.manager .file_info{
     border-bottom: 1px solid lightgray;
 }
 
-.manager ul:hover{
+.manager .file_info:hover,
+.manager .folder:hover{
     background-color: #5ccdda;
 }
 
@@ -110,7 +112,7 @@ body{
     background-size: 30px;
     background-repeat: no-repeat;
     background-position-y: 40%;
-    background-position-x: 3%;
+    background-position-x: 2%;
 }
 
 .folder{

@@ -103,25 +103,31 @@ document.querySelector('.upload_file').addEventListener('change', (event) => {
             'Content-Type': 'multipart/form-data'
         }
     }).then((responce) => {
-        insertElement(file.name);
+        insertElement({'name':file.name});
     })
 });
 
 function insertElement(filename, event = lastEvent){
-    if(event.target.nextSibling != null && event.target.nextSibling.classList !== undefined && event.target.nextSibling.classList.contains("submenu")){
-        if(filename.indexOf(".") === -1){
-            event.target.nextSibling.querySelector('ul').innerHTML+= "<ul><li class='first folder'>" + filename + "</li><div class = 'submenu hide'><ul></ul></div></ul>";
+    if(event !== undefined && event.target.nextSibling != null && event.target.nextSibling.classList !== undefined && event.target.nextSibling.classList.contains("submenu")){
+        if(filename['name'] === undefined){
+            event.target.nextSibling.querySelector('ul').innerHTML+= "<ul class='folder_container'><li class='first folder'>" + filename + "</li><div class = 'submenu hide'><ul></ul></div></ul>";
         }
         else{
-            event.target.nextSibling.querySelector('ul').innerHTML+= "<ul class='file_info'><li class = 'file'>" + filename + "</li></ul>";
+            event.target.nextSibling.querySelector('ul').innerHTML+= "<ul class='file_info'>" +
+                "<li class = 'file'>" + filename['name'] + "</li>" +
+                "<li>"+filename['size']+"</li>" +
+                "</ul>";
         }
     }
     else{
-        if(filename.indexOf(".") === -1){
-            manager.innerHTML+= "<ul><li class='first folder'>" + filename + "</li><div class = 'submenu hide'><ul></ul></div></ul>";
+        if(filename['name'] === undefined){
+            manager.innerHTML+= "<ul class='folder_container'><li class='first folder'>" + filename + "</li><div class = 'submenu hide'><ul></ul></div></ul>";
         }
         else{
-            manager.innerHTML+= "<ul class='file_info'><li class = 'file'>" + filename + "</li></ul>";
+            manager.innerHTML+= "<ul class='file_info'>" +
+                "<li class = 'file'>" + filename['name'] + "</li>" +
+                "<li>"+filename['size']+"</li>" +
+                "</ul>";
         }
     }
     reinit();
@@ -145,6 +151,9 @@ function reinit() {
 
         if (element !== null && element.classList.contains(submenuClass)) {
             request({path:bufferPath}).then((response) => {
+
+                lastEvent.target.nextSibling.querySelector('ul').innerHTML = "";
+
                 for(let item in response.data){
                     insertElement(response.data[item]);
                 }
@@ -234,34 +243,15 @@ function createFullPath(event) {
     return path;
 }
 
-function getOutput(data) {
-    let output = "";
-    for (let key in data) {
-        console.log(data[key]['name']);
-        if(data[key]['name'] !== undefined){
-            output += "<ul class='file_info'>";
-            output += "<li class = 'file'>" + data[key]['name'] + "</li>";
-            output += "<li>" + data[key]['size'] + "</li>";
-            output += "</ul>";
-        }
-        else if (Array.isArray(data[key]) || typeof data[key] === 'object') {
-            output += "<ul>" + "<li class='first folder'>" + key + "</li><div class = 'submenu hide'><ul>" + getOutput(data[key]) + "</ul></div>" + "</ul>";
-        }
-        else if (data[key]['name'] === undefined) {
-            output += "<ul>" + "<li class='first folder'>" + data[key] + "</li><div class = 'submenu hide'><ul></ul></div>" + "</ul>";
-        }
-    }
-    return output;
-}
-
 let files = [];
 function fileList() {
     request().then((response) => {
         files = response.data;
-        console.log('dfdfdf');
-        let output = getOutput(response.data);
-        manager.innerHTML = output;
-        reinit();
+
+        for(let key in files){
+            insertElement(files[key]);
+        }
+
     });
 }
 
